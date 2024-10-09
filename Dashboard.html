@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- table header -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/sticky-header/bootstrap-table-sticky-header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/css/flag-icon.min.css" >
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* .wrapper {
+            height: 100vh;
+            display: flex;
+        } */
+
+        
+
+        /* .fixed-height-container {
+            height: 80vh;
+            overflow: scroll;
+            margin: 0.5rem;
+            background: rgb(179, 8, 8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                0 2px 4px rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
+        } */
+
+        .main {
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            transition: all 0.35s ease-in-out;
+            background-color: #fafbfe;
+        }
+
+        #sidebar {
+            width: 70px;
+            min-width: 70px;
+            z-index: 1000;
+            transition: all .25s ease-in-out;
+            background-color:#030A76;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #sidebar.expand {
+            width: 260px;
+            min-width: 260px;
+        }
+
+        .toggle-btn {
+            background-color: transparent;
+            cursor: pointer;
+            border: 0;
+            padding: 1rem 1.5rem;
+        }
+
+        .toggle-btn i {
+            font-size: 1.5rem;
+            color: #FFF;
+        }
+
+        .sidebar-logo {
+            margin: auto 0;
+        }
+
+        .sidebar-logo a {
+            color: #FFF;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        #sidebar:not(.expand) .sidebar-logo,
+        #sidebar:not(.expand) a.sidebar-link span {
+            display: none;
+        }
+
+        .sidebar-nav {
+            padding: 2rem 0;
+            flex: 1 1 auto;
+        }
+
+        a.sidebar-link {
+            padding: .625rem 1.625rem;
+            color: #FFF;
+            display: block;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            border-left: 3px solid transparent;
+            text-decoration: none;
+        }
+
+        .sidebar-link i {
+            font-size: 1.1rem;
+            margin-right: .75rem;
+        }
+
+        a.sidebar-link:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-left: 3px solid #030A76;
+            color: black;
+        }
+
+        .sidebar-item {
+            position: relative;
+        }
+
+        #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+            position: absolute;
+            top: 0;
+            left: 70px;
+            background-color: #0e2238;
+            padding: 0;
+            min-width: 15rem;
+            display: none;
+        }
+
+        #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+            display: block;
+            max-height: 15em;
+            width: 100%;
+            opacity: 1;
+        }
+
+        #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+            border: solid;
+            border-width: 0 .075rem .075rem 0;
+            content: "";
+            display: inline-block;
+            padding: 2px;
+            position: absolute;
+            right: 1.5rem;
+            top: 1.4rem;
+            transform: rotate(-135deg);
+            transition: all .2s ease-out;
+        }
+
+        #sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+            transform: rotate(45deg);
+            transition: all .2s ease-out;
+        }
+
+
+        /* header icon box shadow */
+
+        .rounded-circle {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                        0 2px 4px rgba(0, 0, 0, 0.06); 
+        }
+
+        .card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
+        
+
+ </style>
+    
+</head>
+
+<body>
+    <div class="wrapper d-flex vh-100">
+        
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <img src="Aurexuslogo.png" alt="Logo" class="img-fluid logo" width="60px" height="60px">
+                    <a href="#" style="text-decoration: none;">Medusa</a>
+                </div>
+                
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="add_project.html" class="sidebar-link">
+                        <i class="lni lni-briefcase"></i>
+                        <span>Add Project</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="dbTableCreation.html" class="sidebar-link">
+                        <i class="lni lni-add-files"></i>
+                        <span>Create Table</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="dbTableEdit.html" class="sidebar-link">
+                        <i class="lni lni-pencil-alt"></i>
+                        <span>Edit Table</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-popup"></i>
+                        <span>Notification</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-cog"></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-exit"></i>
+                        <span>Logout</span>
+                    </a>
+                </li> 
+            </ul>
+        </aside>
+        <div class="main">
+
+            <!-- header -->
+            <div class="row d-flex justify-content-end">
+                
+            
+                <div class="col-auto text-light d-flex justify-content-between">
+                    
+                    <div class="p-2 d-flex align-items-center" style="display: flex; flex-direction: column;">
+                        <span id="language-toggle" class="rounded-circle d-flex justify-content-center align-items-center"
+                              style="width: 40px; height: 40px; padding: 10px;" data-language="english">
+                            <!-- Initially displaying US flag -->
+                            <img src="https://img.icons8.com/emoji/48/000000/united-states-emoji.png" class="flag-icon" alt="English Flag" 
+                                 id="flag-image" style="width:25px; height:25px">
+                                 
+                        </span>
+                        <span id="language-text" class="ms-2 text-dark">English</span>
+                        
+                    </div>
+
+
+
+                    <!-- Notification Icon -->
+                    <div class="p-2">
+                        <span class="rounded-circle d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/appointment-reminders.png" alt="Notification Icon" style=" width:25px; height:25px">
+                        </span>
+                    </div>
+            
+                    <!-- User Avatar Icon -->
+                    <div class="p-2">
+                        <span class="rounded-circle d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; ">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="User Avatar Icon" style=" width:25px; height:25px"> 
+                        </span>
+                    </div>
+                    <div class="p-2">
+                        <span class="rounded-circle d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; ">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/document.png" alt="User Avatar Icon" style=" width:25px; height:25px"> 
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center ">
+                <div>
+                    <h5>
+                        Welcome to Dashboard Page!
+                    </h5>
+                </div>
+
+                <!-- Main container -->
+                <div class="container">
+                    <!-- First Row -->
+                    <div class="row">
+                      <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            Box 1
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            Box 2
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            Box 3
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                    <!-- Second Row -->
+                    <div class="row">
+                      <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            Box 4
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            Box 5
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                        <div class="card">
+                          <div class="card-body">
+                            Box 6
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+            </div>
+                
+                
+    
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/bootstrap-table.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.2/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+    <script src="script.js"></script>
+
+   <script>
+            const hamBurger = document.querySelector(".toggle-btn");
+
+            hamBurger.addEventListener("click", function () {
+            document.querySelector("#sidebar").classList.toggle("expand");
+            });
+
+            // language
+
+            const languageToggle = document.getElementById('language-toggle');
+            const flagImage = document.getElementById('flag-image');
+            const languageText = document.getElementById('language-text');
+
+            // Event listener for toggling the flag and language name
+            languageToggle.addEventListener('click', () => {
+            const currentLanguage = languageToggle.getAttribute('data-language');
+                    
+            // Toggle between English and French
+            if (currentLanguage === 'english') {
+                // Switch to French flag and text
+                flagImage.src = 'https://img.icons8.com/emoji/48/000000/france-emoji.png';
+                languageToggle.setAttribute('data-language', 'french');
+                languageText.textContent = 'French';
+            } else {
+                    // Switch to English flag and text
+                    flagImage.src = 'https://img.icons8.com/emoji/48/000000/united-states-emoji.png';
+                    languageToggle.setAttribute('data-language', 'english');
+                    languageText.textContent = 'English';
+            }
+                });
+
+
+
+    </script>
+    
+    
+</body>
+
+</html>
